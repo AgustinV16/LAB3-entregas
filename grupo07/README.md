@@ -4,7 +4,7 @@
 
 ## Integrantes
 <!-- Completar en el primer Pull Request -->
-- Apellido, Nombre (@usuario-github)
+- Zabala, Álvaro Martín (@alvaromartinzabala-ing)
 - Apellido, Nombre (@usuario-github)
 
 ## Archivos
