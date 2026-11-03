@@ -19,7 +19,7 @@ int main(void) {
     float a, b, resultado;
     int16_t a_q8, b_q8;
     int32_t z;              // multiplicador que voy vaciar
-    int32_t y_q8;
+    int32_t y_q16;          // acumulador
     int32_t current_z;      // constante movil
     int32_t current_x;      // multiplicando movil
 
@@ -38,7 +38,7 @@ int main(void) {
     z = b_q8;
 
     // se inicializa el acumulador en 0
-    y_q8 = 0;
+    y_q16 = 0;
 
     // constante movil iniciada en 64(2^6)
     // para que quede en formato Q7.8 se deben correr 8 bits a la izquierda
@@ -47,16 +47,17 @@ int main(void) {
 
     // realizo lo mismo que en current_z pero multiplicado por x
     // se multiplica por 64 para que quede en formato Q7.8
-    current_x = (int32_t)a_q8 * 64; // * 2^14 para evitar perder decimales
+    // queda con 8 bits fraccionarios extra, para que los desplazamientos de bits no pierdan decimales
+    current_x = (int32_t)a_q8 * 16384; // * 2^14 para evitar perder decimales
 
     for (int i=0; i < 15; i++) {
         if (z == 0) break;
         if (z > 0) {
             z -= current_z;
-            y_q8 += current_x;
+            y_q16 += current_x;
         } else {
             z += current_z;
-            y_q8 -= current_x;
+            y_q16 -= current_x;
         }
 
         current_x /= 2;
@@ -64,12 +65,13 @@ int main(void) {
     }
 
     // reduccion a Q7.8 con redondeo
-    resultado = (float)y_q8 / 256.0f;
+    int32_t y_q78 = (y_q16 + 128) >> 8;
+    resultado = (float)y_q78 / 256.0f;
 
     printf("Resultado directo (float original): %f\n", a * b);
     // se divide por 65536 ya que se multiplico por 2^8 dos veces (una para cada factor)
-    printf("Resultado ideal cuantizado: %f\n", (float)(a_q8 * b_q8) / 65536.0f);
-    printf("Resultado en formato Q7.8: %i\n", y_q8);
+    printf("Resultado ideal cuantizado: %f\n", (float)((int32_t)a_q8 * b_q8) / 65536.0f);
+    printf("Resultado en formato Q7.8: %i\n", y_q78);
     printf("Resultado convertido en decimal: %f\n", resultado);
 
     return 0;
