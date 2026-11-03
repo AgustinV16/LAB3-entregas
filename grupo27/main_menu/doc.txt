@@ -1,0 +1,135 @@
+
+
+    Mmmm... pasate por el codigo que esta bastante claro (creo yo)...
+
+
+
+== -- == -- == -- == -- == -- == -- == -- == -- == -- == -- == -- == -- == -- == -- == -- == -- == -- == -- == -- == -- == -- ==
+
+Subrutina FROMDEC:
+-   Pasa de texto (decimal) a su valor correspondiente (en binario).
+
+                                                TEXTO DE NUMERO DECIMAL                             
+                                                        (string)
+                                                            :
+                    ........................................:........................................
+                    :                                       :                                       :
+        SIGNO ('-' o '+' o nada)                TEXTO DE PARTE ENTERA                 TEXTO DE PARTE FRACCIONARIA
+                (string)                                (string)                                (string)
+                    :                                       :                                       :
+  se guarda simplemente si es negativo      se pasa al equivalente entero       se pasa al equivalente entero (9 digitos)
+                 (bool)                      (valor) (representa entero)                         (valor)
+                    :                                       :                                       :
+                    :                                       :                     se pasa al eqivalente fraccionario
+                    :                                       :                      (valor) (representa fraccionarios)
+                    :                                       :                                       :
+                    :.......................................:.......................................:
+                                                            :
+                                          se pasa a la representacion negativa
+                                                    si fuese necesario
+                                                    (valor) (valor)
+                                            VALOR DECIAML Y VALOR FRACCIONARIO
+
+
+**La subrutina TODEC se procesa de la misma forma pero en sentido inverso, pero con ciertas clausulas para darle formato
+    al texto obtenido.
+
+
+== -- == -- == -- == -- == -- == -- == -- == -- == -- == -- == -- == -- == -- == -- == -- == -- == -- == -- == -- == -- == -- ==
+
+Algoritmos utilizados:
+**********************
+    [::]  Pasaje TEXTO ---> EQUIVALENTE ENTERO:
+    - Nos aprovecharemos que podemos leer un numero decimal de izq a der, digito a digito, y por lo tanto podemos
+    rearmarlo multiplicando por 10 y sumando el digito en binario.
+    Si tenemos "237", tomamos "2" y calculamos [ resultado = (resultado * 10) + ord("2") ] y reiteramos...
+    - Se inicializa un registro resultado en 0.
+    - Se prosesa el texto numero a numero:
+        Con cada numero, se multiplica el reultado por 10, y se suma el valor que representa el numero.
+        [   resultado = (resultado * 10) + numero   ]
+    
+    Consideraciones:
+        Multiplicar por cualquier constante es posible con sumas consecutivas, y un registro auxiliar.
+        Multiplicar R0 por 10 es posible usando R1 como auxiliar de la siguiente forma:
+        ADD R1 R0 R0        ;   [R1] = [R0] * 2             osea [R1] = [R0] * 2
+        ADD R1 R1 R1        ;   [R1] = [R1] * 2             osea [R1] = [R0] * 4
+        ADD R1 R1 R0        ;   [R1] = [R1] + [R0]          osea [R1] = [R0] * 5
+        ADD R0 R1 R1        ;   [R0] = [R1] * 2             osea [R0] = [R0] * 10
+
+
+
+    [::] Pasaje EQUIVALENTE ENTERO ---> TEXTO:
+    - Usaremos un algoritmo de restas sucesivas para obtener el valor de cada uno de los digitos decimales. Consiste en restar
+    un a potencia de 10 (ejemplo para el 4to digito seria 10**3), para ver cuantas veces entra en el entero.
+    - Se procede recorriendo un vector (null terminado) con las potencias de 10**n correspondientes a la cantidad de digitos
+    a obtener, a las que llame expresion_actual.
+    - Se resta sucesivamente el entero menos la expresion_actual, llevando un conteo de la cantidad de veces que se pudo restar
+    sin que el resultado pase a ser negativo.
+    Al terminar, el conteo nos indica el digito actual, y para continuar, actualizamos el entero para quitarle el digito
+    obtenido, actualizamos la expresion_actual al del siguiente digito, y reiterar hasta obtener todos los digitos.
+    Ejemplo: entero: 567 , obtener el 3er digito es restarle -100 (osea - 10**2) 5 veces, ya que la 6ta vez pasara a ser -33.
+        Una vez obtenido el 5, el entero pasa a ser 67, y procedemos con el 2do digito restando -10 (osea - 10**1).
+
+    Consideraciones:
+        Existe un algoritmo llamado "Double Dabble" que utiliza shift y suma para separar un valor entero binario, en un formato
+        llamado "Decimales codificados en Binario" (BCD), en el cual cada digito decimal ocupa 4 bits, y resulta idoneo ya que
+        separar cada digito para pasar a texto es sencillo. Pero para las limitaciones de la LC3 es mucho mas optimo simplemente
+        implementar un algoritmo de busqueda como el presentado.
+
+
+
+    [::] Pasaje EQUIVALENTE ENTERO ---> EQUIVALENTE FRACCIONARIO:
+    - Nos aprovecharemos de que multiplicar un numero fraccionario por 2, nos brinda como entero el bit correspondiente a 2**-1,
+    y en la parte fraccionaria nos deja un nuevo numero fraccionario que podemos seguir iterando.
+    Si tenemos 0.6, lo multiplicamos por 2 [ 1.2 = 0.6 * 2 ], el 1 entero significa que el bit fraccionario es 1, y continuamos
+    reiterando con lo que nos queda, osea 0.2, para obtener los demas bits.
+    - Se inizializa un registro resultado en 0.
+    - Se prosesa el entero 17 veces, buscando los valores de los bits del resultado de 16 bits (de izq a der),
+        y la 17ma vez se usa para redondear:
+        Cada iteracion, se multiplica el entero por 2, y se compara si es mayor a 1.0 osea se resta 1_000_000_000 (vea Consideraciones).
+        Si la resta se concreta positiva o cero, encontramos un bit resultado valido:
+        [   entero = entero * 2                                 ]
+        [   Si entero - 1_000_000_000 >= 0:                     ]
+        [       resultado = resultado | mascara_bit_acutal      ]
+        [       entero = entero - 1_000_000_000                 ]
+        Caso contrario se continua iterando.
+    - La 17ta vez se utiliza el bit como redondeo, si es 0 se mantiene el resultado igual, y si es 1 se suma
+        1 al resultado
+        [   Si la_17ma_ves_dio_1:           ]
+        [       resultado = resultado + 1   ]
+
+    Consideraciones:
+        Se utiliza un numero decimal de 9 digitos fraccionarios, ya que la mayor potencia de 10**n que se puede representar en 32 bits
+        con signo es 1_000_000_000.
+        Ademas, 32 bits utilizan 2 registros, por lo que es necesario implementar formas para multiplicar un numero de 32 bits por 2 y
+        tambien sumar numeros de 32 bits.
+        Los numeros equivalentes fraccionarios toman la siguientes representaciones:
+        0.141_592_653_589   ->  141_592_653     (se descarta el excedente)
+        0.5                 ->  500_000_000
+        0.001_23            ->  001_230_000
+        Y el valor 1_000_000_000 corresponde al valor 1.0 utilizado para obtener la parte entera en el algoritmo.
+
+
+
+    [::] Pasaje EQUIVALENTE FRACCIONARIO ---> EQUIVALENTE ENTERO:
+    - Simplemente vamos bit a bit de derecha a izquierda (vea Consideraciones), realizando la sumatoria de lo que valdria el
+    bit actual. El valor de cada bit es calculado en cada iteracion.
+    - Se inizializan registros resultado en 0.
+    - Se procesa bit a bit con una mascara (der a izq), el fraccionario, sumando el valor correspondiente a ese bit siempre que
+    sea 1:
+        [   valor_actual = 2**-16                       ]
+        [   Si fraccionario & mascara:                  ]   
+        [       resultado = resultado + valor_actual    ]
+        [   mascara = mascara << 1                      ]
+        [   valor_actual = valor_actual * 2             ]
+
+    Consideraciones:
+        Se procesa de derecha a izquierda ya que par calcular el valor actual requerimos potencias de 2**n, y es mas facil comenzar
+        por potencias mas chicas y multiplicar * 2 para subir de exponete, que dividir para bajar exponente.
+        Tambien hay que ser concientes que para el resultado se requiere de 32 bits (2 registros) y para el valor_actual, 48 bits
+        (3 registros), y para el algoritmo necesitamos sumar 2 valores de 32 bits, y poder multiplicar por 2 (osease bitshift izq)
+        valores de 48 bits.
+        Se utilizan estos valores para poder tener todas las potencias de 2**-n * 10**9 desde n 16 hasta 1, y la manera de hacerlo
+        es tener 10**9 almacenado en 3 registros e ir multiplicando * 2. De esta manera en los 2 primeros registros se obtienen
+        justamente la potencia de 2**-n que necesitamos.
+
