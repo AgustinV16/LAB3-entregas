@@ -5,7 +5,7 @@
 ## Integrantes
 - Zimmermann, Miguel Angel (@ZimmerMaster26)
 - Espinola, Tobias (@T0bias1)
-- Gonzalez, Nahuel Sebastián
+- Gonzalez, Nahuel Sebastián (@Acelerator909)
 
 ## Archivos
 - `main.asm`: Programa principal (Se usa como entrada para probar el funcionamiento).
