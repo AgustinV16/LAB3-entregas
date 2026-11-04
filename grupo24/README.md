@@ -3,13 +3,12 @@
 **Consigna:** A partir de un número ingresado en decimal, pasar a binario y hexadecimal
 
 ## Integrantes
-<!-- Completar en el primer Pull Request -->
-- Apellido, Nombre (@usuario-github)
-- Apellido, Nombre (@usuario-github)
+- Garay, Carlos Ezequiel (@ezegaray14)
+- Leopolino, Joaquín Fabián (@joakoleo)
+- Pacheco, Agustin Santiago Ramón (@agusspachecoo)
 
 ## Archivos
 <!-- Qué archivo hace qué -->
-- `archivo.asm`: descripción
 
 ## Cómo probarlo
 <!-- Pasos para ensamblar y ejecutar, y un ejemplo de entrada y salida -->
