@@ -3,15 +3,17 @@
 **Consigna:** Debe poder dar formato de decimal a binario con punto fijo y cambiar entre modo entrada por teclado y pasaje por memoria de los datos para calcular los resultados de cada algoritmo
 
 ## Integrantes
+
 - Zimmermann, Miguel Angel (@ZimmerMaster26)
 - Espinola, Tobias (@T0bias1)
 - Gonzalez, Nahuel Sebastián (@Acelerator909)
 
 ## Archivos
-- `main.asm`: Programa principal (Se usa como entrada para probar el funcionamiento).
+
+- `main.asm`: Programa principal de prueba (Se usa como entrada para probar el funcionamiento).
 - `main_menu.asm`: Subrutina principal de la interfaz del menu.
 - `subrutinas/`: Carpeta con las subrutinas esenciales.
-    - `circlsh.asm: Subrutina CIRCLSH ara rotar de manera circular dos regitstros, hacia la izquierda.
+    - `circlsh.asm`: Subrutina CIRCLSH para rotar de manera circular dos regitstros, hacia la izquierda.
     - `fromdec.asm`: Subrutina FROMDEC para pasaje de texto decimal a valor en binario (entero y fraccionario, 1 WORD cada uno).
     - `fromhex.asm`: Subrutina FROMHEX para pasaje de texto hexadecimal a vaolr en binario (1 WORD).
     - `getcfilered.asm`: Subrutina GETCFILTERED para obtención de caracter por teclado unicamente si cumple sierto filtro.
@@ -32,7 +34,8 @@
     - `getval.asm`: Subrutina para obtencion de Q15.16 (acepta direcciones de texto para ciertas funcionalidades).
     - `outval.asm`: Subrutina para muestra por consola de un valor (Q15.16).
 
+***
 
-Para probar el funcionamiento actual, simplemente se debe cargar el proyecto (todos los archivos dentro del directorio `main_menu/`) en el simulador.
-Luego seleccionamos el archivo main.asm como ENTRY, pulsando en `...` y seleccionar como entrada.
-Compilamos y ejecutamos.
+> Para probar el funcionamiento actual, simplemente se debe cargar el proyecto (todos los archivos dentro del directorio `main_menu/`) en el simulador.  
+> Luego seleccionamos el archivo main.asm como entrada del programa, pulsando en `...` y seleccionar como entrada.  
+> Compilamos y ejecutamos.
