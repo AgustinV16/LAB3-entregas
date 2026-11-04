@@ -4,12 +4,12 @@
 
 ## Integrantes
 <!-- Completar en el primer Pull Request -->
-- Apellido, Nombre (@usuario-github)
-- Apellido, Nombre (@usuario-github)
+- Javier, Santiago Lucas Nahuel (@lucasjavierr)
+- Ruiz Diaz, Avril Aylin (@avrilruizdiaz)
 
 ## Archivos
 <!-- Qué archivo hace qué -->
-- `archivo.asm`: descripción
+- `Lab3a/lab3a_puntofijo.asm`: Realiza la multiplicacion y division entre dos numeros en formato Q7.8 previamente casteados
 
 ## Cómo probarlo
 <!-- Pasos para ensamblar y ejecutar, y un ejemplo de entrada y salida -->
