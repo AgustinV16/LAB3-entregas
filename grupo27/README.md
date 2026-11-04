@@ -34,8 +34,15 @@
     - `getval.asm`: Subrutina para obtencion de Q15.16 (acepta direcciones de texto para ciertas funcionalidades).
     - `outval.asm`: Subrutina para muestra por consola de un valor (Q15.16).
 
-***
 
-> Para probar el funcionamiento actual, simplemente se debe cargar el proyecto (todos los archivos dentro del directorio `main_menu/`) en el simulador.  
-> Luego seleccionamos el archivo main.asm como entrada del programa, pulsando en `...` y seleccionar como entrada.  
-> Compilamos y ejecutamos.
+# COMO PROBAR La interfaz hasta el momento.
+
+Para probar el funcionamiento actual, simplemente se debe cargar el proyecto (todos los archivos dentro del directorio `main_menu/`) en el simulador.  
+Luego seleccionamos el archivo main.asm como entrada del programa, pulsando en `...` y seleccionar como entrada.  
+Compilamos y ejecutamos.
+
+- Descargar la carpeta `main_menu/` como `.zip`. (Pueden descargar el repositorio completo, o buscar paginas como <https://githubfolder.com/>)
+- Con la carpeta comprimida en `.zip` pueden ir a <https://lc3.lgrum.xyz/> e importar el proyecto como zip, con el 4to botón (caja abierta) de los botones de la seccion de Archivos.
+- Buscan el archivo `main.asm`, pulsan en opciones (`...`), y **Usar como entrada** (si es que no esta ya como entrada).
+- Listo. Pueden darle a **▶ Continuar** para iniciar la ejecucion.
+
