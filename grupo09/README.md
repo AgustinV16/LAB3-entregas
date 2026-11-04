@@ -4,8 +4,9 @@
 
 ## Integrantes
 <!-- Completar en el primer Pull Request -->
-- Apellido, Nombre (@usuario-github)
-- Apellido, nnn (@usuario-github)
+- Münz, Yessica(@yessi2004)
+- Mantulak, Gustavo(@Gustavo-Mantu)
+- Casales, Mia(@miacasales)
 
 ## Archivos
 <!-- Qué archivo hace qué -->
