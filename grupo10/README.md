@@ -4,7 +4,7 @@
 
 ## Integrantes
 <!-- Completar en el primer Pull Request -->
-- Apellido, Nombre (@usuario-github)
+- Benitez, Denis (@ElAndiWh3-github)
 - Apellido, Nombre (@usuario-github)
 
 ## Archivos
