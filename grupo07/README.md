@@ -5,7 +5,7 @@
 ## Integrantes
 <!-- Completar en el primer Pull Request -->
 - Zabala, Álvaro Martín (@alvaromartinzabala-ing)
-- Apellido, Nombre (@usuario-github)
+- Behr, Pedro Sebastian (@pedrobehr21-source)
 
 ## Archivos
 <!-- Qué archivo hace qué -->
