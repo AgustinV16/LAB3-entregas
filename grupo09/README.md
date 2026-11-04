@@ -5,7 +5,7 @@
 ## Integrantes
 <!-- Completar en el primer Pull Request -->
 - Apellido, Nombre (@usuario-github)
-- Apellido, Nombre (@usuario-github)
+- Apellido, nnn (@usuario-github)
 
 ## Archivos
 <!-- Qué archivo hace qué -->
