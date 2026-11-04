@@ -74,7 +74,7 @@ El proceso inverso utilizado en la Subrutina FROMDEC, utiliza el mismo diagrama 
 
 # Algoritmos implementados para el pasaje entre tipos de datos
 
-## Texto deciaml ENTERO --> Equivalente ENTERO
+## Texto decimal ENTERO --> Equivalente ENTERO
 
 Nos aprovecharemos que podemos leer el texto de izquierda a derecha, digito a digito, por lo que podemos simplificar al algoritmo a simplemente multiplicar por 10 y sumar el valor del digito.
 
@@ -97,7 +97,7 @@ Consideraciones:
     ADD R0 R1 R1    ;   [R0] = [R1] * 2         osea [R0] = [R0] * 10
 ```
 
-## Equivalente ENTERO --> Texto deciaml ENTERO
+## Equivalente ENTERO --> Texto decimal ENTERO
 
 Usaremos un algoritmo de conteo de restas sucesivas para obtener el valor de cada digito decimal, de izquierda a derecha.  
 Consiste en contar cuantas veces entra la unidad, decena, centena, etc. del digito dentro del equivalente entero.
