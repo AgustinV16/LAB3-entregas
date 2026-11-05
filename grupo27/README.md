@@ -14,13 +14,13 @@
 - `main_menu.asm`: Subrutina principal de la interfaz del menu.
 - `subrutinas/`: Carpeta con las subrutinas esenciales.
     - `circlsh.asm`: Subrutina CIRCLSH para rotar de manera circular dos regitstros, hacia la izquierda.
-    - `fromdec.asm`: Subrutina FROMDEC para pasaje de texto decimal a valor en binario (entero y fraccionario, 1 WORD cada uno).
+    - `fromdec.asm`: Subrutina FROMDEC para pasaje de texto decimal a valor en binario (entero y fraccionario, 1 WORD cada uno, lo que corresponde a Q15.16).
     - `fromhex.asm`: Subrutina FROMHEX para pasaje de texto hexadecimal a vaolr en binario (1 WORD).
-    - `getcfilered.asm`: Subrutina GETCFILTERED para obtención de caracter por teclado unicamente si cumple sierto filtro.
+    - `getcfilered.asm`: Subrutina GETCFILTERED para obtención de caracter por teclado unicamente si cumple cierto filtro.
     - `getline.asm`: Subrutina GETLINE para obtención de linea (hasta encontrar '\n').
-    - `pause.asm`: Subrutina PAUSE que muestra por consola un prompt y continua ejecucion al pulsarce una tecla.
+    - `pause.asm`: Subrutina PAUSE que muestra por consola un prompt y continua ejecucion al pulsar una tecla.
     - `sumover.asm`: Subrutina SUMOVER para sumar dos registros teniendo en cuenta un bit de acarreo (de entrada y salida).
-    - `todec.asm`: Subrutina TODEC para pasaje de valor en binario (entero y fraccionario, 1 WORD cada uno) a texto decimal.
+    - `todec.asm`: Subrutina TODEC para pasaje de valor en binario (entero y fraccionario, 1 WORD cada uno, correspondiente a Q15.16) a texto decimal.
 - `q_cast/`: Carpeta con las subrutinas de casteo.
     - `DQ16_to_Q8.asm`: Subrutina para pasaje de valor Q15.16 a Q7.8.
     - `DQ16_to_Q12.asm`: Subrutina para pasaje de valor Q15.16 a Q3.12.
