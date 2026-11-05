@@ -5,7 +5,8 @@
 ## Integrantes
 <!-- Completar en el primer Pull Request -->
 - Benitez, Denis (@ElAndiWh3-github)
-- Apellido, Nombre (@usuario-github)
+- Silvero Zapani, Matias (@PurpleMaZ)
+- Pintos, Daiana (@Luz105)
 
 ## Archivos
 <!-- Qué archivo hace qué -->
