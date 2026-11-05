@@ -4,8 +4,9 @@
 
 ## Integrantes
 <!-- Completar en el primer Pull Request -->
-- Apellido, Nombre (@usuario-github)
-- Apellido, Nombre (@usuario-github)
+- De Los Santos, Dahiara Claribel (@dahizz)
+- Kamchem, Melina (@melika2332)
+- Wereszczuk, Danna Maira (@wereszczukdanna-cell)
 
 ## Archivos
 <!-- Qué archivo hace qué -->
