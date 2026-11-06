@@ -34,7 +34,7 @@ Para poder cargar el programa se deben seguir los pasos indicados por el grupo 2
 - Entrada: 
     - Base: [-32,768 ; +32,767].
     
-    - Exponente: *$$E_{\max} = \lfloor \log_{\vert{}B\vert{}} (32\,767) \rfloor$$*
+    - Exponente: $$E_{\max} = \lfloor \log_{\vert{}B\vert{}} (32\,767) \rfloor$$
 - Salida: [-32,768 ; +32,767].
 
 ### Resolución de los formatos
