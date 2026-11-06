@@ -7,7 +7,7 @@ Portillo Francisco (@kuboyasu-aren)
 Pauluk Thiago (@PaulukThiago)
 Semelak Pablo (@pablosem)
 
-##Archivos
+## Archivos
 - `Cordic_reduccion_de_argumento.asm`: subrutina en LC-3 que reduce un ángulo en radianes (punto fijo Q3.12) al intervalo [-π/2, π/2], sumando o restando π. Devuelve el ángulo reducido en R0 y una bandera de paridad en R3.
 
 ## Cómo probarlo
