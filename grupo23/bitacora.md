@@ -1,0 +1,1 @@
+# Bitácora de Investigación - Grupo 23 (SQRT Non-Restoring)
