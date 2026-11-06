@@ -143,14 +143,14 @@ Los archivos que definimos como viejos funcionan dentro del entorno de WEB-LC3, 
 -se implementaron las ultimas optimizaciones para intercambiar multiplicando y multiplicador
 -se implemento el resultado en dos palabras
 -se creo un programa en C para explicar la logica del programa
-### Avance 4: revisión de especificaciones
+### Avance 6: revisión de especificaciones
 
 - pasaje al simulador del grupo 8
 - Se identificó que la subrutina debe recibir argumentos en `R0` y `R1`.
 - Se estableció que el resultado de 32 bits se devuelve en `R1:R0`.
 - Se respetó la restricción de no utilizar `R6` ni `R7`.
 
-### Avance 5: adaptación del algoritmo
+### Avance 7: adaptación del algoritmo
 
 - Se tomó como base la multiplicación Shift-and-Add existente.
 - Se eliminó la interacción por teclado y la selección de formatos.
@@ -158,14 +158,14 @@ Los archivos que definimos como viejos funcionan dentro del entorno de WEB-LC3, 
 - Se definió la salida como Q16.16.
 - Se agregó soporte para signos positivos, negativos y cero.
 
-### Avance 6: resultado de 32 bits
+### Avance 8: resultado de 32 bits
 
 - Se implementó el multiplicando como un valor de 32 bits en `R4:R3`.
 - Se utilizó `R1:R0` como acumulador del producto.
 - Se incorporó el acarreo de la palabra baja a la palabra alta.
 - Se preservaron `R2`, `R3`, `R4` y `R5`.
 
-### Avance 7: pruebas
+### Avance 9: pruebas
 
 - Se verificaron casos representativos de operandos positivos, negativos y cero.
 - Se verificó el caso `1.5 * 2.25 = 3.375`.
