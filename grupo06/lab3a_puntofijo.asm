@@ -1,76 +1,197 @@
-.ORIG x3000
+        .ORIG x3000
 
-; ========================================================
-; 1. CARGA DE DATOS (Ya formateados en Q)
-; Elegimos números pequeños para no desbordar los 16 bits.
-; Num1 real = 0.0625  -> Q3.12 = 0.0625 * 4096 = 256
-; Num2 real = 0.125   -> Q7.8  = 0.125 * 256 = 32
-; ========================================================
-LD R1, NUM1_Q3_12   ; R1 = 256 (Formato Q3.12)
-LD R2, NUM2_Q7_8    ; R2 = 32 (Formato Q7.8)
+; Operandos en Q3.12 y Q7.8. Las tres salidas se guardan en Q7.8.
+; EST_SUMA, EST_RESTA y EST_MULT: 0 = valido, 1 = fuera de rango.
+; Si un estado vale 1, el resultado asociado se guarda en cero.
 
-; ========================================================
-; PUNTO 3: Compatibilización y Suma
-; Convertir R1 (Q3.12) a Q7.8. Equivale a hacer R1 >> 4.
-; Simulamos el >> 4 dividiendo por 2^4 (16) mediante restas.
-; ========================================================
-AND R3, R3, #0      ; R3 será el contador (cociente)
-LD R4, NEG_16       ; R4 = -16
+; Compatibilizar el primer operando con un corrimiento aritmetico de 4.
+; Copiar los 12 bits altos, extendiendo el signo en el acumulador R0.
+        LD R1, NUM1_Q3_12
+        AND R0, R0, #0
+        ADD R1, R1, #0
+        BRzp INICIO_Q7
+        ADD R0, R0, #-1
+INICIO_Q7
+        AND R2, R2, #0
+        ADD R2, R2, #12
+Q7_BIT
+        ADD R0, R0, R0
+        ADD R1, R1, #0
+        BRzp Q7_SIGUIENTE
+        ADD R0, R0, #1
+Q7_SIGUIENTE
+        ADD R1, R1, R1
+        ADD R2, R2, #-1
+        BRp Q7_BIT
 
-DIV16_LOOP
-    ADD R1, R1, R4  ; R1 = R1 - 16
-    BRn END_DIV16   ; Si da negativo, terminamos el bucle
-    ADD R3, R3, #1  ; Sumamos 1 al contador
-    BRnzp DIV16_LOOP
-END_DIV16
+; Suma. Hay desborde si los operandos tienen el mismo signo y el
+; resultado cambia de signo.
+        LD R1, NUM2_Q7_8
+        ADD R2, R0, R1
+        AND R3, R3, #0
+        ADD R0, R0, #0
+        BRn SUMA_A_NEG
+        ADD R1, R1, #0
+        BRn GUARDA_SUMA
+        ADD R2, R2, #0
+        BRn SUMA_FUERA
+        BRnzp GUARDA_SUMA
+SUMA_A_NEG
+        ADD R1, R1, #0
+        BRzp GUARDA_SUMA
+        ADD R2, R2, #0
+        BRn GUARDA_SUMA
+SUMA_FUERA
+        ADD R3, R3, #1
+        AND R2, R2, #0
+GUARDA_SUMA
+        ST R2, RES_SUMA
+        ST R3, EST_SUMA
 
-; R3 ahora tiene Num1 convertido a Q7.8 (256 / 16 = 16)
-; Sumamos los dos números (R3 + R2)
-ADD R5, R3, R2      ; R5 = Suma en Q7.8 (16 + 32 = 48)
-ST R5, RES_SUMA     ; Guardamos el resultado de la suma
+; Resta. Hay desborde si los operandos tienen signos opuestos y el
+; resultado cambia respecto del signo del primer operando.
+        NOT R2, R1
+        ADD R2, R2, #1
+        ADD R2, R0, R2
+        AND R3, R3, #0
+        ADD R0, R0, #0
+        BRn RESTA_A_NEG
+        ADD R1, R1, #0
+        BRzp GUARDA_RESTA
+        ADD R2, R2, #0
+        BRn RESTA_FUERA
+        BRnzp GUARDA_RESTA
+RESTA_A_NEG
+        ADD R1, R1, #0
+        BRn GUARDA_RESTA
+        ADD R2, R2, #0
+        BRn GUARDA_RESTA
+RESTA_FUERA
+        ADD R3, R3, #1
+        AND R2, R2, #0
+GUARDA_RESTA
+        ST R2, RES_RESTA
+        ST R3, EST_RESTA
 
-; ========================================================
-; PUNTO 4: Multiplicación y Ajuste
-; Multiplicamos NUM1 (Q3.12) * NUM2 (Q7.8) crudo mediante
-; sumas sucesivas.
-; ========================================================
-LD R1, NUM1_Q3_12   ; Recargamos R1 (se consumió en la resta)
-LD R2, NUM2_Q7_8    ; R2 es nuestro contador de multiplicador (32)
-AND R6, R6, #0      ; R6 = Acumulador de la multiplicación
+; Multiplicar los operandos originales por magnitud. R0 y R1 contienen
+; las magnitudes sin signo, incluido x8000 para el extremo negativo.
+        AND R7, R7, #0
+        LD R0, NUM1_Q3_12
+        BRzp MULT_SIGNO_B
+        NOT R0, R0
+        ADD R0, R0, #1
+        ADD R7, R7, #1
+MULT_SIGNO_B
+        LD R1, NUM2_Q7_8
+        BRzp MULT_INICIO
+        NOT R1, R1
+        ADD R1, R1, #1
+        NOT R7, R7
+        ADD R7, R7, #2
+MULT_INICIO
+        ST R7, SIGNO_PRODUCTO
+        AND R2, R2, #0
+        AND R3, R3, #0
+        AND R4, R4, #0
+        LD R5, MASCARA15
+        AND R6, R6, #0
+        ADD R6, R6, #15
+        ADD R6, R6, #1
 
-MULT_LOOP
-    ADD R2, R2, #0  ; Evaluamos el multiplicador
-    BRz END_MULT    ; Si llega a 0, terminamos de sumar
-    ADD R6, R6, R1  ; Acumulamos: R6 = R6 + R1
-    ADD R2, R2, #-1 ; Descontamos 1 al multiplicador
-    BRp MULT_LOOP   ; Repetimos mientras sea positivo
-END_MULT
+; Producto crudo Q10.20: R2 + R3*2^15 + R4*2^30.
+; Recorrer los 16 bits del multiplicador desde el mas significativo.
+; En cada vuelta, duplicar el producto parcial y sumar R0 si el bit es 1.
+MULT_BIT
+        ADD R4, R4, R4
+        ADD R3, R3, R3
+        BRzp DOBLA_BAJO
+        AND R3, R3, R5
+        ADD R4, R4, #1
+DOBLA_BAJO
+        ADD R2, R2, R2
+        BRzp MULT_SUMAR
+        AND R2, R2, R5
+        ADD R3, R3, #1
+MULT_SUMAR
+        ADD R1, R1, #0
+        BRzp MULT_SIGUIENTE
+        ADD R2, R2, R0
+        BRzp MULT_SIGUIENTE
+        AND R2, R2, R5
+        ADD R3, R3, #1
+        BRzp MULT_SIGUIENTE
+        AND R3, R3, R5
+        ADD R4, R4, #1
+MULT_SIGUIENTE
+        ADD R1, R1, R1
+        ADD R6, R6, #-1
+        BRp MULT_BIT
 
-; R6 tiene la multiplicación cruda en Q10.20 (256 * 32 = 8192)
-; Ajuste a Q7.8: Equivale a >> 12 (Dividir por 2^12 = 4096)
-AND R7, R7, #0      ; R7 = Contador para el resultado ajustado
-LD R4, NEG_4096     ; R4 = -4096
+; El corrimiento de 12 para Q7.8 admite magnitudes crudas menores
+; que 2^27. La magnitud 2^27 exacta solo cabe con signo negativo.
+        ADD R4, R4, #0
+        BRp MULT_FUERA
+        LD R5, NEG_4096
+        ADD R5, R3, R5
+        BRp MULT_FUERA
+        BRn MULT_AJUSTE
+        LD R5, SIGNO_PRODUCTO
+        BRz MULT_FUERA
+        ADD R2, R2, #0
+        BRnp MULT_FUERA
+        LD R0, MINIMO_Q7
+        BRnzp MULT_OK
 
-DIV4096_LOOP
-    ADD R6, R6, R4  ; R6 = R6 - 4096
-    BRn END_DIV4096 ; Si da negativo, terminamos
-    ADD R7, R7, #1  ; Incrementamos resultado ajustado
-    BRnzp DIV4096_LOOP
-END_DIV4096
+; Cociente por 4096: ocho veces la palabra media mas los tres
+; bits superiores de la palabra baja. Los 12 restantes son el resto.
+MULT_AJUSTE
+        ADD R0, R3, R3
+        ADD R0, R0, R0
+        ADD R0, R0, R0
+        AND R1, R1, #0
+        ADD R2, R2, R2
+        AND R6, R6, #0
+        ADD R6, R6, #3
+AJUSTE_BIT
+        ADD R1, R1, R1
+        ADD R2, R2, #0
+        BRzp AJUSTE_SIGUIENTE
+        ADD R1, R1, #1
+AJUSTE_SIGUIENTE
+        ADD R2, R2, R2
+        ADD R6, R6, #-1
+        BRp AJUSTE_BIT
+        ADD R0, R0, R1
+        LD R5, SIGNO_PRODUCTO
+        BRz MULT_OK
+        ADD R2, R2, #0
+        BRz MULT_NEGAR
+        ADD R0, R0, #1
+MULT_NEGAR
+        NOT R0, R0
+        ADD R0, R0, #1
+MULT_OK
+        AND R1, R1, #0
+        BRnzp GUARDA_MULT
+MULT_FUERA
+        AND R0, R0, #0
+        AND R1, R1, #0
+        ADD R1, R1, #1
+GUARDA_MULT
+        ST R0, RES_MULT
+        ST R1, EST_MULT
+        HALT
 
-; R7 tiene el resultado final ajustado a Q7.8 (8192 / 4096 = 2)
-ST R7, RES_MULT     ; Guardamos el resultado final
-
-HALT                ; Fin del programa
-
-; ========================================================
-; ZONA DE DATOS Y VARIABLES
-; ========================================================
-NUM1_Q3_12  .FILL #256    ; Operando 1 en formato Q3.12
-NUM2_Q7_8   .FILL #32     ; Operando 2 en formato Q7.8
-NEG_16      .FILL #-16    ; Constante para shift >> 4
-NEG_4096    .FILL #-4096  ; Constante para shift >> 12
-RES_SUMA    .BLKW 1       ; Memoria para guardar la suma
-RES_MULT    .BLKW 1       ; Memoria para guardar la multiplicación
-
-.END
+NUM1_Q3_12      .FILL #256      ; 0.0625 en Q3.12
+NUM2_Q7_8       .FILL #32       ; 0.125 en Q7.8
+MASCARA15       .FILL x7FFF
+NEG_4096        .FILL #-4096
+MINIMO_Q7       .FILL x8000
+SIGNO_PRODUCTO  .BLKW #1
+RES_SUMA        .BLKW #1
+RES_RESTA       .BLKW #1
+RES_MULT        .BLKW #1
+EST_SUMA        .BLKW #1
+EST_RESTA       .BLKW #1
+EST_MULT        .BLKW #1
+        .END
