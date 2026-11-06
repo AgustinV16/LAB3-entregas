@@ -20,9 +20,9 @@
 
 ## Cómo probarlo
 <!-- Pasos para ensamblar y ejecutar, y un ejemplo de entrada y salida -->
-La implementación en Assembly se encuentra funcionando en el simulador desarrollado por el Grupo 8 pero todavía no se encuentra publicada.
+La implementación en Assembly se encuentra funcionando y publicado en el simulador desarrollado por el Grupo 8.
 
-El programa actualmente no permite ingreso de datos por el usuario. Por lo que si se quieren probar valores distintos a los utilizados de ejemplo se debera reemplazar el valor guardado en los registros en la seccion de --- 1. INICIALIZACIÓN DE VARIABLES EN REGISTROS ---.
+El programa actualmente no permite ingreso de datos por el usuario. Por lo que si se quieren probar valores distintos a los utilizados de ejemplo se debera reemplazar el valor guardado en los registros en la seccion de --- 1. INICIALIZACIÓN DE VARIABLES EN REGISTROS ---. (R1 - Base / R2 - Expo)
 
 Para poder cargar el programa se deben seguir los pasos indicados por el grupo 27.
 
@@ -34,7 +34,7 @@ Para poder cargar el programa se deben seguir los pasos indicados por el grupo 2
 - Entrada: 
     - Base: [-32,768 ; +32,767].
     
-    - Exponente: $$E_{\max} = \lfloor \log_{\vert{}B\vert{}} (32\,767) \rfloor$$
+    - Exponente: *$$E_{\max} = \lfloor \log_{\vert{}B\vert{}} (32\,767) \rfloor$$*
 - Salida: [-32,768 ; +32,767].
 
 ### Resolución de los formatos
