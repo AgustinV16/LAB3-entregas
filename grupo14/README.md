@@ -3,6 +3,7 @@ Consigna: Calculadora de logaritmos en cualquier base por algoritmo de Borchardt
 
 Integrantes
 Agú, Alejandro Valentín (@AleValen11)
+Hoet, Gabriel Alejandro (@GabrielHoet)
 
 Contenidos de la carpeta
 - log_borchardt_q8_7.asm: Código principal de assembly adaptado para el algoritmo de Borchardt en formato Q8.7.
