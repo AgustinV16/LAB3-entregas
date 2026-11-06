@@ -4,6 +4,7 @@
 .EXTERNAL FROMHEX-FROMHEX
 .EXTERNAL PAUSE-PAUSE
 
+.EXTERNAL Q14_TO_DQ16-Q14_TO_DQ16
 .EXTERNAL Q12_TO_DQ16-Q12_TO_DQ16
 .EXTERNAL Q8_TO_DQ16-Q8_TO_DQ16
 
@@ -193,6 +194,34 @@ main_menu_one_q3_12
     BR main_menu_swap_node              ;   # Cambio de nodo (offset = 0)
 
 
+;   ==- Controlador subrutinas de un Q3.12 con resultado en Q1.14 -=============
+main_menu_one_q3_12_result_q1_14
+    LD R5 main_menu_state               ;   [R5] nodo = [estado]
+
+    LDR R0 R5 #1                        ;
+    PUTS                                ;   print(nodo.texto)
+
+    LEA R0 main_menu_prompt_a           ;
+    LEA R1 main_menu_text_a             ;
+    LD R2 main_menu_sub_getval_q12      ;
+    JSRR R2                             ;   [R0] = getval_q12("a")
+
+    LDR R2 R5 #4                        ;
+    LDR R2 R2 #0                        ;
+    JSRR R2                             ;   [R0] result = node.subrutina(value_a)
+
+    LD R1 main_menu_sub_from_q14        ;
+    JSRR R1                             ;
+    LD R2 main_menu_sub_outval          ;
+    JSRR R2                             ;   outval(fromQ14(result))
+
+    LD R0 main_menu_sub_pause           ;
+    JSRR R0                             ;   pause()
+
+    AND R0 R0 #0                        ;
+    BR main_menu_swap_node              ;   # Cambio de nodo (offset = 0)
+
+
 ;   ==- Controlador subrutinas de un Q7.8 -=====================================
 main_menu_one_q7_8
     LD R5 main_menu_state               ;   [R5] nodo = [estado]
@@ -290,6 +319,7 @@ main_menu_sub_getcfiltered  .FILL GETCFILTERED-GETCFILTERED
 main_menu_sub_fromhex       .FILL FROMHEX-FROMHEX
 main_menu_sub_pause         .FILL PAUSE-PAUSE
 
+main_menu_sub_from_q14      .FILL Q14_TO_DQ16-Q14_TO_DQ16
 main_menu_sub_from_q12      .FILL Q12_TO_DQ16-Q12_TO_DQ16
 main_menu_sub_from_q8       .FILL Q8_TO_DQ16-Q8_TO_DQ16
 
@@ -369,7 +399,7 @@ main_menu_sin_table         .FILL main_menu_one_q3_12
 main_menu_sin_table_text    .STRINGZ "\n\n==SENO TRIGONOMETRICO (TABLE)==\n a (Q3.12)\n"
 main_menu_sin_table_next    .FILL main_menu_init
 ;   ----------------------------------------------------------------------------
-main_menu_sin_chev          .FILL main_menu_one_q3_12
+main_menu_sin_chev          .FILL main_menu_one_q3_12_result_q1_14
                             .FILL main_menu_sin_chev_text
                             .FILL #0
                             .FILL main_menu_sin_chev_next
