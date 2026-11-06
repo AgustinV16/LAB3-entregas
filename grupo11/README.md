@@ -4,8 +4,9 @@
 
 ## Integrantes
 <!-- Completar en el primer Pull Request -->
-- Apellido, Nombre (@usuario-github)
-- Apellido, Nombre (@usuario-github)
+- Morinigo, Santiago Nahuel (@morinigosantiago00-dot)
+- Kelm, Nayla Victoria (@naylakelm19-oss)
+- Gomez, Pablo Daniel (@usuario-github)
 
 ## Archivos
 <!-- Qué archivo hace qué -->

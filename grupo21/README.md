@@ -4,8 +4,9 @@
 
 ## Integrantes
 <!-- Completar en el primer Pull Request -->
-- Apellido, Nombre (@usuario-github)
-- Apellido, Nombre (@usuario-github)
+- Castel Lopez, Anahi Esmeralda (@castel-anahi)
+- Sosa, Nahali Ayelen (@nahalisosa)
+- De Olivera, Silvina (@silvinasoledad)
 
 ## Archivos
 <!-- Qué archivo hace qué -->
