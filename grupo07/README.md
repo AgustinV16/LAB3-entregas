@@ -8,13 +8,17 @@
 
 ---
 ## Archivos del Repositorio:
-- `README.md`: Documentación técnica del proyecto, rangos, estado de simulación y bitácora de avances.
+- `README.md`: instrucciones breves, integrantes y descripción general del proyecto.
 
+## lab3_a
+- `programa.c`: solicita los números, realiza las conversiones Q y calcula las operaciones.
+- `p3.asm`: convierte y alinea el valor Q7.8 para realizar la suma en Q3.12.
+- `p4.asm`: implementa la multiplicación y el ajuste del resultado en ensamblador LC-3.
 
 ## lab3_b
 - `mcd_mcm_v3.asm`: Programa autónomo e interactivo optimizado en ensamblador LC-3. Lee dos números enteros con signo por consola, calcula el MCD y el MCM mediante restas y sumas sucesivas, y muestra los resultados en pantalla.
 - `mainv3.c`: Programa auxiliar en C que implementa el modelo matemático de referencia en formato Q15.0, un simulador funcional ciclo a ciclo de la arquitectura LC-3 y un banco de pruebas automatizado (`--test`) con 63.750 casos de validación.
-
+- `informe_lab3_MCD_MCM.pdf`: documentación técnica, rangos, estado de simulación y bitácora de avances.
 
 ---
 
