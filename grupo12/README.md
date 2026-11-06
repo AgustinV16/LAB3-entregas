@@ -6,7 +6,7 @@
 <!-- Completar en el primer Pull Request -->
 - Dose Rivarola, Agustín Ezequiel (@doseagustin)
 - Radovitzky Z S, Gonzalo (@tzAnT00)
-- Apellido, Nombre (@usuario-github)
+- Miller, Enrique Adrian (@enriquemiller2007-bit)
 
 ## Archivos
 <!-- Qué archivo hace qué -->
