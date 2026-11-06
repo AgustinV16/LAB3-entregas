@@ -12,7 +12,6 @@
 - `README.md`: instrucciones breves, integrantes y descripción general del proyecto.
 
 ### lab3_a
-Archivos donde se practicó el formato de punto fijo. No son módulos de la calculadora.
 - `programa.c`: solicita los números, realiza las conversiones Q y calcula las operaciones.
 - `p3.asm`: convierte y alinea el valor Q7.8 para realizar la suma en Q3.12.
 - `p4.asm`: implementa la multiplicación y el ajuste del resultado en ensamblador LC-3.
