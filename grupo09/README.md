@@ -37,10 +37,11 @@ y_{n+1} = y_n\,\frac{3 - x y_n^2}{2}, \qquad \sqrt{x} \approx x\,y_n.
 ### Cómo probar en LC-3 Simulator
 
 1. Abrir **https://lc3.lgrum.xyz/**.
-2. En **Subir archivos**, cargar **solo estos seis archivos `.asm` de `grupo09/`**. No cargar otros `main.asm` ni versiones duplicadas.
-3. Seleccionar `main.asm` → **Usar como entrada**.
-4. Presionar **Ensamblar → Reiniciar → Continuar**.
-5. En la consola, escribir un número y presionar **Enter**. Repetir tantas veces como sea necesario; escribir `q` y Enter para salir.
+2. Descargar los archivos del repositorio.
+3. En **Subir archivos**, cargar los archivos del repositorio.
+4. Seleccionar `main.asm` → **Usar como entrada**.
+5. Presionar **Ensamblar → Reiniciar → Continuar**.
+6. En la consola, escribir un número y presionar **Enter**. Repetir tantas veces como sea necesario; escribir `q` y Enter para salir.
 
 ### Pruebas de referencia
 
