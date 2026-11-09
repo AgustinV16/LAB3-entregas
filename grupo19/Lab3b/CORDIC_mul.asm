@@ -1,6 +1,6 @@
 ; =====================================================================
 ;  MULTIPLICACION POR CORDIC (modo lineal) EN Q7.8 - PROGRAMA COMPLETO PARA LC-3
-;  equivale a CORDIC_multiplicacion_Q78_1.c
+;  equivale a CORDIC_multiplicacion_Q78.c
 ; =====================================================================
 ;
 ;  COMO SE USA
@@ -29,7 +29,7 @@
 ;    y se pasa por DIRECCION (como un puntero en C).
 ;  - parametros en R0 y R1. El valor de retorno (si hay) vuelve en R0.
 ;  - cada subrutina PRESERVA R1..R6 (guarda en memoria los que usa y los restaura antes del RET).
-;    R0 solo cambia si la subrutina devuelve un valor. (CORDIC_MUL devuelve ademas R1 y preserva R2..R6)
+;    R0 solo cambia si la subrutina devuelve un valor. (CORDIC_MUL devuelve el resultado en R0, el estado en R1 y preserva R2..R6)
 ;  - R7 lo pisa JSR y tambien TRAP (GETC, OUT, PUTS): las subrutinas que los usan guardan R7 y lo restauran.
 ;  - las zonas de guardado son fijas (ST/LD), por lo tanto NO son recursivas.
 ;  - al volver, los codigos de condicion (N/Z/P) no tienen un significado definido.
@@ -286,8 +286,8 @@ IE_R7   .BLKW #1
 ; ---------------------------------------------------------------------
 ;  CORDIC_MUL : a_q8 * b_q8 con CORDIC lineal
 ;     entrada : R0 = a_q8     R1 = b_q8
-;     salida  : R0 = estado:  0 = ok / 1 = desbordamiento (|a*b| > 127.996) / 2 = b_q8 invalido (-32768)
-;               R1 = resultado en Q7.8 (solo valido si R0 = 0; en otro caso vale 0)
+;     salida  : R0 = resultado en Q7.8 (solo valido si R1 = 0; en otro caso vale 0)
+;               R1 = estado:  0 = ok / 1 = desbordamiento (|a*b| > 127.996) / 2 = b_q8 invalido (-32768)
 ;     deja ademas en memoria: CM_Y    = acumulador de 32 bits (Q16), que vale a_q8 * b_q8
 ;                             CM_ITER = cantidad de iteraciones realizadas
 ;     preserva R2..R6
