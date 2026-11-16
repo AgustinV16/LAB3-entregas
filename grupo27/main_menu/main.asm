@@ -1,4 +1,3 @@
-
 .ORIG x3000
 BR main
 
@@ -18,23 +17,27 @@ BR main
 ;   (!) Para que se carguen correctamente las SUBRUTINAS EXTERNAS, tiene que estar *logeado*
 ;   con alguna cuenta (ya sea de grupo o administrador) y darle a *Ensamblar*.
 ;
+;   (!) Solo en el *simulador del grupo 8* el `g27_` significa que de no encontrar archivos
+;   buscara los necesarios en la carpeta del grupo 27. (en otros simuladores el `g27_` no se usa).
+;
 ;   (!) Para cambiar entre prueba SIN y CON SUBRUTINAS EXTERNAS, comente y descomente las
 ;   siguientes lineas:
+;
 
-; .EXTERNAL MAIN_MENU-MAIN_MENU                               ; <- Pruebas unicamente la interfaz.
-; sub_main_menu       .FILL MAIN_MENU-MAIN_MENU               ; <- *
+; .EXTERNAL g27_MAIN_MENU-MAIN_MENU                           ; <- Pruebas unicamente la interfaz.
+; sub_main_menu       .FILL g27_MAIN_MENU-MAIN_MENU           ; <- *
 
-.EXTERNAL MAIN_MENU_PROGRESO-MAIN_MENU                      ; <- Pruebas con subrutinas externas.
-sub_main_menu       .FILL MAIN_MENU_PROGRESO-MAIN_MENU      ; <- * 
+.EXTERNAL g27_MAIN_MENU_PROGRESO-MAIN_MENU                  ; <- Pruebas con subrutinas externas.
+sub_main_menu       .FILL g27_MAIN_MENU_PROGRESO-MAIN_MENU  ; <- * 
 
 
 ;   (!) Para cambiar entre modo Mostrar interfaz, y modo Automatico, comente y descomente las
 ;   siguientes lineas:
 
 main
-     AND R0 R0 #0                        ; <- 0 es nullptr (osea mostrar el menu normalmente)
-    ; LEA R0 programa_del_menu            ; <- ptr (es para que automaticamente corra el programa de abajo)
-    ; LEA R0 programa_del_menu_completo   ; <- ptr (es para que automaticamente corra el programa de abajo)
+     ; AND R0 R0 #0                        ; <- 0 es nullptr (osea mostrar el menu normalmente)
+     ; LEA R0 programa_del_menu            ; <- ptr (es para que automaticamente corra el programa de abajo)
+     LEA R0 programa_del_menu_completo   ; <- ptr (es para que automaticamente corra el programa de abajo)
 
     LD R1 sub_main_menu
     JSRR R1
@@ -48,8 +51,8 @@ programa_del_menu
     .FILL   #1      ;   modo verboso (muestra todos los valores por consola)
     
     .FILL   #15     ;   MULTIPLICACION BOOTH        (Indice de operacion)
-    .FILL   x0500   ;   Valor 5                     (Q7.8)
-    .FILL   xF400   ;   Valor -12                   (Q7.8)
+    .FILL   x3396   ;   Valor 51,5859375            (Q7.8)
+    .FILL   xF8C3   ;   Valor -7,23828125           (Q7.8)
     .FILL   #0      ;   Espacio para el resultado   (Q7.8)
     .FILL   #0      ;   Espacio para el resultado   (Quedara en blanco)
     
@@ -71,111 +74,111 @@ programa_del_menu
 programa_del_menu_completo
     .FILL   #1      ; modo verboso: muestra cada operacion, sus operandos y su resultado
 
-    .FILL   #1      ; REDUCCION DE ARGUMENTO: pi/2 (Q3.12) debe permanecer aproximadamente igual
-    .FILL   x1921   ; pi/2 ~= 1.5706
+    .FILL   #1      ; REDUCCION DE ARGUMENTO: entrada 2,3562 (Q3.12), aproximadamente 3pi/4
+    .FILL   #9651   ; 2,356201171875 (Q3.12)
     .FILL   #0      ; segundo operando no utilizado
     .FILL   #0      ; resultado (Q3.12)
     .FILL   #0      ; espacio sin uso
 
-    .FILL   #2      ; SENO TAYLOR: seno de 205 grados ~= -0.4226 (resultado Q3.12)
-    .FILL   #2050   ; 205 grados, entero
+    .FILL   #2      ; SENO TAYLOR: entrada de 60 grados (resultado Q3.12)
+    .FILL   #600   ; 60 grados, entero
     .FILL   #0      ; segundo operando no utilizado
     .FILL   #0      ; resultado (Q3.12)
     .FILL   #0      ; espacio sin uso
 
-    .FILL   #3      ; SENO TABLA: seno(pi/2) ~= 1
-    .FILL   x1921   ; pi/2 (Q3.12)
+    .FILL   #3      ; SENO TABLA: seno(pi/3) ~= 0,866
+    .FILL   #4289   ; pi/3 (Q3.12)
     .FILL   #0      ; segundo operando no utilizado
     .FILL   #0      ; resultado (Q1.14)
     .FILL   #0      ; espacio sin uso
 
-    .FILL   #4      ; SENO CHEBYSHEV-PADE: seno(pi/2) ~= 1
-    .FILL   x1921   ; pi/2 (Q3.12)
+    .FILL   #4      ; SENO CHEBYSHEV-PADE: seno(pi/3) ~= 0,866
+    .FILL   #4289   ; pi/3 (Q3.12)
     .FILL   #0      ; segundo operando no utilizado
     .FILL   #0      ; resultado (Q1.14)
     .FILL   #0      ; espacio sin uso
 
-    .FILL   #5      ; COSENO: coseno(pi/2) ~= 0
-    .FILL   x1921   ; pi/2 (Q3.12)
+    .FILL   #5      ; COSENO: coseno(pi/3) ~= 0,5
+    .FILL   #4289   ; pi/3 (Q3.12)
     .FILL   #0      ; segundo operando no utilizado
     .FILL   #0      ; resultado (Q1.14)
     .FILL   #0      ; espacio sin uso
 
-    .FILL   #6      ; CAMBIO DE BASE A HEX: muestra el entero 42 en hexadecimal
-    .FILL   #42     ; entero decimal
+    .FILL   #6      ; CAMBIO DE BASE A HEX: muestra el entero 1342 en hexadecimal
+    .FILL   #1342     ; entero decimal
     .FILL   #0      ; segundo operando no utilizado
     .FILL   #0      ; resultado no aplica (se imprime en consola)
     .FILL   #0      ; espacio sin uso
 
-    .FILL   #7      ; CAMBIO DE BASE A BIN: muestra el entero 10 en binario
-    .FILL   #10     ; entero decimal
+    .FILL   #7      ; CAMBIO DE BASE A BIN: muestra xFBCA en binario
+    .FILL   xFBCA   ; entero representado por xFBCA
     .FILL   #0      ; segundo operando no utilizado
     .FILL   #0      ; resultado no aplica (se imprime en consola)
     .FILL   #0      ; espacio sin uso
 
-    .FILL   #8      ; SQRT NON RESTORING: raiz(4) = 2
-    .FILL   x0400   ; 4.0 (Q7.8)
+    .FILL   #8      ; SQRT NON RESTORING: raiz(4,35546875) ~= 2,087
+    .FILL   #1115   ; 4,35546875 (Q7.8)
     .FILL   #0      ; segundo operando no utilizado
     .FILL   #0      ; resultado (Q6.9)
     .FILL   #0      ; espacio sin uso
 
-    .FILL   #9      ; SQRT NEWTON-RAPHSON: raiz(4) = 2
-    .FILL   #4      ; parte entera de 4.0 (DQ15.16)
-    .FILL   #0      ; parte fraccionaria de 4.0 (DQ15.16)
+    .FILL   #9      ; SQRT NEWTON-RAPHSON: raiz(4,35698) ~= 2,0873
+    .FILL   #4      ; parte entera de 4,35698 (DQ15.16)
+    .FILL   #23395  ; parte fraccionaria de 4,35698 (DQ15.16)
     .FILL   #0      ; parte entera del resultado (DQ15.16)
     .FILL   #0      ; parte fraccionaria del resultado (DQ15.16)
 
-    .FILL   #10     ; EXPONENCIACION: e^(ln(2)) ~= 2
-    .FILL   x0B17   ; ln(2) ~= 0.6931 (Q3.12)
+    .FILL   #10     ; EXPONENCIACION: e^1 ~= 2,7183
+    .FILL   #4096   ; 1  (Q3.12)
     .FILL   #0      ; segundo operando no utilizado
     .FILL   #0      ; resultado (Q7.8)
     .FILL   #0      ; espacio sin uso
 
-    .FILL   #11     ; POTENCIA POR MULTIPLICACIONES: 2^3 = 8
-    .FILL   x0200   ; base 2.0 (Q7.8)
-    .FILL   #3      ; exponente entero
+    .FILL   #11     ; POTENCIA POR MULTIPLICACIONES: (-2)^5 = -32
+    .FILL   #-512  ; base -2,0 (Q7.8)
+    .FILL   #5      ; exponente entero
     .FILL   #0      ; resultado (Q7.8)
     .FILL   #0      ; espacio sin uso
 
-    .FILL   #12     ; POTENCIA EXPONENCIAL BINARIA: 2^5 = 32
-    .FILL   #2      ; base entera
+    .FILL   #12     ; POTENCIA EXPONENCIAL BINARIA: (-2)^5 = -32
+    .FILL   #-2      ; -2 base entera
     .FILL   #5      ; exponente entero
     .FILL   #0      ; resultado entero
     .FILL   #0      ; espacio sin uso
 
-    .FILL   #13     ; MULTIPLICACION CORDIC: 3 * 4 = 12
-    .FILL   x0300   ; 3.0 (Q7.8)
-    .FILL   x0400   ; 4.0 (Q7.8)
+    .FILL   #13     ; MULTIPLICACION CORDIC: 13,828125 * -7,23828125 ~= -100,0919
+    .FILL   x0DD4   ;   Valor 13,828125             (Q7.8)
+    .FILL   xF8C3   ;   Valor -7,23828125           (Q7.8)
     .FILL   #0      ; resultado (Q7.8)
     .FILL   #0      ; espacio sin uso
 
-    .FILL   #14     ; MULTIPLICACION SHIFT-SUMA: 3 * 4 = 12
-    .FILL   x0300   ; 3.0 (Q7.8)
-    .FILL   x0400   ; 4.0 (Q7.8)
+    .FILL   #14     ; MULTIPLICACION SHIFT-SUMA: 13,828125 * -7,23828125 ~= -100,0919
+    .FILL   x0DD4   ;   Valor 13,828125             (Q7.8)
+    .FILL   xF8C3   ;   Valor -7,23828125           (Q7.8)
     .FILL   #0      ; parte entera del resultado (DQ15.16)
     .FILL   #0      ; parte fraccionaria del resultado (DQ15.16)
 
-    .FILL   #15     ; MULTIPLICACION BOOTH: (-3) * 4 = -12
-    .FILL   xFD00   ; -3.0 (Q7.8)
-    .FILL   x0400   ; 4.0 (Q7.8)
+    .FILL   #15     ; MULTIPLICACION BOOTH: 13,828125 * -7,23828125 ~= -100,0919
+    .FILL   x0DD4   ;   Valor 13,828125             (Q7.8)
+    .FILL   xF8C3   ;   Valor -7,23828125           (Q7.8)
     .FILL   #0      ; resultado (Q7.8)
     .FILL   #0      ; espacio sin uso
 
-    .FILL   #16     ; DIVISION LARGA: 6 / 3 = 2
-    .FILL   x0600   ; 6.0 (Q7.8)
-    .FILL   x0300   ; 3.0 (Q7.8)
+    .FILL   #16     ; DIVISION LARGA: 6,3671875 / 3,234375 (Q7.8)
+    .FILL   #1630   ; 6,3671875 (Q7.8)
+    .FILL   #828    ; 3,234375 (Q7.8)
     .FILL   #0      ; resultado (Q7.8)
     .FILL   #0      ; espacio sin uso
 
-    .FILL   #17     ; DIVISION NEWTON-RAPHSON: 9 / 3 = 3
-    .FILL   x0900   ; 9.0 (Q7.8)
-    .FILL   x0300   ; 3.0 (Q7.8)
+    .FILL   #17     ; DIVISION NEWTON-RAPHSON: 6,3671875 / 3,234375 (Q7.8)
+    .FILL   #1630   ; 6,3671875 (Q7.8)
+    .FILL   #828    ; 3,234375 (Q7.8)
     .FILL   #0      ; resultado (Q7.8)
     .FILL   #0      ; espacio sin uso
 
-    .FILL   #18     ; DIVISION CORDIC: 0.25 / 0.5 = 0.5
+    .FILL   #18     ; DIVISION CORDIC: 0,25 / 0,7000122 (Q0.15)
     .FILL   x2000   ; 0.25 (Q0.15)
-    .FILL   x4000   ; 0.5 (Q0.15)
+    .FILL   x599A   ; 0,7000122 (Q0.15)
     .FILL   #0      ; resultado (Q0.15)
     .FILL   #0      ; espacio sin uso
 
@@ -197,14 +200,14 @@ programa_del_menu_completo
     .FILL   #0      ; resultado entero
     .FILL   #0      ; espacio sin uso
 
-    .FILL   #22     ; MINIMO COMUN MULTIPLO: mcm(6, 8) = 24
-    .FILL   #6      ; primer entero
-    .FILL   #8      ; segundo entero
+    .FILL   #22     ; MINIMO COMUN MULTIPLO: mcm(16, 38) = 304
+    .FILL   #16     ; primer entero
+    .FILL   #38     ; segundo entero
     .FILL   #0      ; resultado entero
     .FILL   #0      ; espacio sin uso
 
-    .FILL   #23     ; CONVERSION Q3.12 A Q7.8: 1.5 permanece 1.5
-    .FILL   x1800   ; 1.5 (Q3.12)
+    .FILL   #23     ; CONVERSION Q3.12 A Q7.8: entrada 5,3662109375
+    .FILL   #21980  ; 5,3662109375 (Q3.12)
     .FILL   #0      ; segundo operando no utilizado
     .FILL   #0      ; resultado (Q7.8)
     .FILL   #0      ; espacio sin uso
