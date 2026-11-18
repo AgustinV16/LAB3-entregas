@@ -46,6 +46,46 @@ sumover --> fromdec
 sumover --> todec
 ```
 
+# Estructuracion interna del menu (main_menu.asm)
+
+```mermaid
+flowchart 
+
+subgraph "**EJEMPLOS**"
+  subgraph "NODO de Seno por Tabla"
+    C0["ejecutar subrutina con Q12 -> Q14"] ~~~ C1
+    C1["titulo a mostrar"] ~~~ C2
+    C2["-"] ~~~ C3
+    C3["nodos siguientes"] ~~~ C4
+    C4["subrutina del seno por tabla"]
+  end
+
+  subgraph "(Ejemplo) NODO de menu Potencia"
+    B0["mostrar menu"] ~~~ B1
+    B1["texto del menu"] ~~~ B2
+    B2["filtro de caracteres"] ~~~ B3
+    B3["nodos siguientes"] ~~~ B4
+    B4["-"]
+  end
+end
+
+subgraph "Estructura de un NODO"
+  A0["[0] controlador (direccion en el programa)"] ~~~ A1
+  A1["[1] texto (ptr)"] ~~~ A2
+  A2["[2] filtro (ptr)"] ~~~ A3
+  A3["[3] vector nodos siguientes (ptr)"] ~~~ A4
+  A4["[4] subrutina (ptr)"]
+end
+
+subgraph "Datos necesarios para recorrer los nodos"
+  Z0["NODO ACTUAL (estado del menu)"] ~~~ Z1
+  Z1["CONTROLADORES (partes del programa encargadas de manejar nodos)"] ~~~ Z2
+  Z2["DATOS GENERALES (textos de los distintos formatos a obtener y mostrar, entre otros...)"] ~~~ Z3
+  Z3["DATOS DE LOS NODOS Y SUBRUTINAS (todos los nodos del menu, asi como vectores de punteros a las subrutinas)"]
+end
+
+```
+
 
 # Subrutina TODEC y FROMDEC
 
