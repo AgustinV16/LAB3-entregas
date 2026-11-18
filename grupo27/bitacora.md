@@ -12,3 +12,11 @@
 - Progreso con definición de instrucciones de la ISA.
   -  Tabla con binario y especificación de las intrucciones.
 
+### Miércoles 18, Nov 2026
+
+- Planteamiento de todas las instrucciones a implementar en la ISA.
+  -  Tabla con OP codes, argumentos, modo de direccionamiento, descripciones, entre otros.
+- (Exposición explicación del programa del menú utilizado en el benchmark).
+- Discusión de detalles de programacion.
+  - Agentes, editor de código preferente, entre otros.
+
