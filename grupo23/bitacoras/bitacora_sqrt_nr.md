@@ -31,7 +31,7 @@
 - *Fecha y hora:* 21/10/2026 - 19:45 hs a 20:15 hs
 - *Objetivo del día:* Compartir el avance de los algoritmos con otros grupos y establecer criterios de integración para los módulos del simulador LC-3.
 - *Actividades realizadas:* 
-  - Puesta en común de los programas y algoritmos en Assembly con los demás equipos de laboratorio.
+  - Puesta en común del análisis de los algoritmos en alto nivel (C++) con los demás equipos de laboratorio.
   - Análisis de los requisitos para la futura subida de los algoritmos como módulos en la página del simulador de la cátedra.
   - Relación de los desafíos del trabajo práctico con los contenidos teóricos de arquitectura vistos en clase.
 - *Observaciones y hallazgos:* Se evidenció que conocer cómo se están desarrollando las distintas funciones es vital. Comprendimos la importancia fundamental de establecer criterios comunes de desarrollo para garantizar que todos los programas puedan integrarse correctamente sin conflictos de interfaz.
@@ -93,24 +93,25 @@
 - *Plan para la siguiente sesión:*  Probar la integración real del código actualizado en la plataforma de simulación web lc3.lgrum.xyz.
 
 ## Sesión 9
-- *Fecha y hora:* 10/11/2026 - 08:30 hs a 10:00 hs
+- *Fecha y hora:* 10/11/2026 - 08:30 hs a 10:15 hs
 - *Objetivo del día:* Verificar el funcionamiento del nuevo código Assembly en el simulador web y presentarlo ante el jefe de la cátedra.
 - *Actividades realizadas:* 
   - Verificación y corroboración del correcto funcionamiento de la rutina actualizada en lc3.lgrum.xyz.
   - Presentación de la actualización ante el Ing. Carballo (ante la ausencia temporal de la tutora Ing. Patricia Feltan), obteniendo su visto bueno y la directiva de subirlo como módulo.
   - Realización de una puesta en común con un integrante del Grupo 10 sobre el uso y comportamiento de los módulos en la plataforma.
   - Pruebas iniciales de integración utilizando el archivo main.asm y el menú principal provisto por el Grupo 27.
+  - Publicación de la primera versión (v1) del archivo modulo_sqrt_nr.asm en la plataforma mediante el botón "PUBLICAR", siguiendo la indicación del Ing. Carballo.
 - *Observaciones y hallazgos:* El Ing. Carballo validó el progreso y orientó sobre el proceso formal de subida en la plataforma. La interacción con otros grupos facilitó el intercambio de experiencias sobre las herramientas del simulador.
 - *Dificultades u obstáculos:* Ninguna significativa en esta sesión.
 - *Plan para la siguiente sesión:* Configurar correctamente y resolver los requerimientos de sintaxis del enlazador web.
 
 ## Sesión 10
 - *Fecha y hora:* 10/11/2026 - 17:30 hs a 18:15 hs
-- *Objetivo del día:* Ejecutar pruebas funcionales de punta a punta en la consola de la calculadora y completar la publicación oficial del módulo en el simulador.
+- *Objetivo del día:* Ejecutar pruebas funcionales de punta a punta en la consola de la calculadora con el módulo ya publicado en el simulador.
 - *Actividades realizadas:* 
   - Pruebas de ejecución interactiva en la pestaña Consola, navegando al menú de raíz cuadrada y seleccionando la opción correspondiente.
   - Autenticación en la plataforma utilizando las credenciales asignadas al Grupo 23.
-  - Publicación formal del archivo modulo_sqrt_nr.asm en el servidor web mediante el botón "PUBLICAR".
+  - Verificación de la versión publicada del archivo modulo_sqrt_nr.asm en el servidor web.
   - Localización definitiva del módulo publicado dentro del apartado "Otros grupos" de la plataforma, confirmando su disponibilidad global para el proyecto.
 - *Observaciones y hallazgos:* La calculadora presentó errores de cálculos, se verificó nuevamente el código asm pero al parecer es error del main.
 - *Dificultades u obstáculos:* Presunto error de cálculos ya que al calcular la raíz de 12 arroja 12,23 como resultado.
