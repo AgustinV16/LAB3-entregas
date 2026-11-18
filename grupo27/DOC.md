@@ -3,40 +3,47 @@
 
 ```mermaid
 flowchart RL
-A["MAIN"]
-A0["main.asm"] 
 
-B["SUBRUTINA PRINCIPAL"] ~~~ A
-B0["main_menu.asm"] --> A0
+subgraph MAIN
+  main((("main.asm")))
+end
+subgraph MAIN_MENU
+  main_menu(["main_menu.asm"])
+end
+subgraph "VALUE IO (val_io/)"
+  getval["getval.asm"]
+  outval["outval.asm"]
+  getval_buffer[("getval_buffer.asm")]
+end
+subgraph "Q CAST (q_cast/)"
+  to_qm_n["TO_QM_N.asm"]
+  from_qm_n["FROM_QM_N.asm"]
+end
+subgraph "STANDARD SUBRUTINES (subrutinas/)"
+  getcfiltered{{"getcfiltered.asm"}}
+  fromhex{{"fromhex.asm"}}
+  pause{{"pause.asm"}}
+  getline{{"getline.asm"}}
+  fromdec{{"fromdec.asm"}}
+  todec{{"todec.asm"}}
+  circlsh{{"circlsh.asm"}}
+  sumover{{"sumover.asm"}}
+end
 
-C["SUBRUTINAS AUXILIARES"] ~~~ B
-C0["val_io/getval_int.asm"] --> B0
-C1["val_io/getval_q8.asm"] --> B0
-C2["val_io/getval_q12.asm"] --> B0
-C3["val_io/getval.asm"] --> B0
-C4["val_io/outval.asm"] --> B0
-D[ ] ~~~ C; style D height:0px;
-D0["val_io/getval_buffer.asm"] --> C0 & C1 & C2 & C3 & C4
-
-E["CASTEOS"] ~~~ D
-E0["q_cast/Q8_to_DQ16.asm"] ----> B0 
-E1["q_cast/Q12_to_DQ16.asm"] ----> B0
-E2["q_cast/QDQ16_to_Q8.asm"]
-E3["q_cast/QDQ16_to_Q12.asm"]
-E0 & E2 ---> C1
-E1 & E3 ---> C2
-
-F["SUBRUTINAS ESENCIALES"] ~~~ E
-F0["subrutinas/getcfiltered.asm"] -----> B0
-F1["subrutinas/fromhex.asm"] -----> B0
-F2["subrutinas/pause.asm"] -----> B0
-F3["subrutinas/getline.asm"] ----> C0 & C1 & C2 & C3
-F4["subrutinas/fromdec.asm"] ----> C0 & C1 & C2 & C3
-F5["subrutinas/todec.asm"] ----> C0 & C1 & C2 & C3 & C4
-F6["subrutinas/circlsh.asm"] --> E0 & E1 & E2 & E3
-
-G[ ] ~~~ F; style G height:0px;
-G0["subrutinas/sumover.asm"] --> F4 & F5
+main_menu --> main
+getcfiltered & fromhex & pause --> main_menu
+from_qm_n --> main_menu
+getval & outval --> main_menu
+getval_buffer --> getval
+getline & fromdec & todec --> getval
+to_qm_n & from_qm_n --> getval
+getval_buffer --> outval
+todec --> outval
+from_qm_n --> outval
+circlsh --> to_qm_n
+circlsh --> from_qm_n
+sumover --> fromdec
+sumover --> todec
 ```
 
 
