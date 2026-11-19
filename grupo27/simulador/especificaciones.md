@@ -3,17 +3,17 @@
 
 ### General
 
-Se realizará un simulador de una microarquitectura de Computadoras, basada en la LC-3 del libro "introduction to computing systems" de yale n. patt, sanjay j. patel, tercera edición, pero con cambios especificados en el apartado de más abajo.  
+Se realizará un simulador de una microarquitectura de Computadoras en el lenguaje de programacion Python, basada en la LC-3 del libro "introduction to computing systems" de yale n. patt, sanjay j. patel, tercera edición, pero con cambios especificados en el apartado de más abajo.  
 
 ### Simulador
 
-Se deberá poder iniciar un simulador, y pasarle tanto una lista de valores o un archivo de texto con los siguentes formatos:  
+Se deberá poder iniciar un simulador, y pasarle tanto una lista de valores o un archivo de texto con los siguientes formatos:  
 - Numéricos (números int del lenguaje python)
 - Binario (representado en texto con 8 caracteres '0', '1')
 - Hexadecimal (representado en texto con 2 caracteres)
 Además se esperara que el primer y segundo valor pasado (tomados combinados como una dirección de 16 bits) sea la ubicación de memoria donde comienza el programa (lo cual se podrá desactivar pasándole una bandera especifica con ese fin).
   
-El programa del simulador puede realizarse en módulos pero se intentara mantener lo mas organizado posible sin crear un módulos para cada pequeña parte del proyecto.  
+El programa del simulador puede realizarse en módulos pero se intentara mantener lo mas organizado posible sin crear un módulo para cada pequeña parte del proyecto.  
 Tiene que estar ligeramente comentado (intentando que el programa se entienda de igual manera)  .
 Se debe tener en cuenta que es necesario que sea fácil editar, borrar y agregar, instrucciones de la ISA.
 Se deberá realizar enfocado a que se tiene que poder contar y medir factores como:
@@ -71,3 +71,5 @@ Las etapas son individuales de cada archivo, por lo que se realizan las etapas p
 ### Sistema Operativo de la ISA
 
 Tambien se deberá programar un sistema operativo que permita las llamadas TRAP, introducir datos por teclado, mostrar datos por monitor (consola), todo con un sistema de interrupciones simulado, registro de estado, pila de modo usuario y modo privilegiado manejada con el Registro 6, similar al que se define en el libro de la LC-3.
+Este deberá contar con soporte desde el simulador, o estar integrado en el mismo (con la posibilidad de ser editado), para la implementación de las interrupciones.
+
