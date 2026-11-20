@@ -14,16 +14,22 @@ Se deberá poder iniciar un simulador, y pasarle tanto una lista de valores o un
 Además se esperara que el primer y segundo valor pasado (tomados combinados como una dirección de 16 bits) sea la ubicación de memoria donde comienza el programa (lo cual se podrá desactivar pasándole una bandera especifica con ese fin).
   
 El programa del simulador puede realizarse en módulos pero se intentara mantener lo mas organizado posible sin crear un módulo para cada pequeña parte del proyecto.  
-Tiene que estar ligeramente comentado (intentando que el programa se entienda de igual manera)  .
-Se debe tener en cuenta que es necesario que sea fácil editar, borrar y agregar, instrucciones de la ISA.
+Tiene que estar ligeramente comentado (intentando que el programa se entienda de igual manera).  
+Se debe tener en cuenta que es necesario que sea fácil editar, borrar y agregar, instrucciones de la ISA.  
 Se deberá realizar enfocado a que se tiene que poder contar y medir factores como:
 -  Cantidad de instrucciones ejecutadas
 -  Lectura de memoria
 -  Escritura en memoria
 -  Ciclos ejecutados  
 
-Se deberá poder iniciar un simulador en distintos modos de operación que serán monociclo, multiciclo y pipeline, donde por defecto se utilizara el modo monociclo.
-Esto significa que las instrucciones tendrán que tener planteado un sistema para definir que realizan en cada parte del pipeline (Fetch, Decode, Execute, Memory, entre otras necesarias).
+Se deberá poder iniciar un simulador en distintos modos de operación:
+- Mono ciclo o Un solo siclo por instrucción.
+- Multi ciclo, donde se ejecutan solo las etapas necesarias de cada instrucción.
+- Pipeline, que ejecuta en simultaneo etapas distintas de instrucciones consecutivas.
+
+Esto significa que las instrucciones tendrán que tener planteado un sistema para definir que realizan en cada etapa del pipeline (Fetch, Decode, Execute, Memory, entre otras necesarias).  
+Además de un sistema para elegir que ocurre cuando se toman saltos condicionales e incondicionales como diferentes predictores de salto entre los cuales pueden estar *Salto siempre tomado*, *salto nunca tomado*, un predictor de 1 bit, o de 2 bits (de momento mantenerlo simple pero expandible, para que se pueda agregar un predictor de salto mas complejo con historial de saltos y demás).  
+Todas las opciones del modo del simulador y del predictor de saltos tienen que poderse configurar de alguna manera al iniciar el simulador (ya sea antes o después, o por medio de banderas pasadas al propio simulador). Por defecto si no se selecciona ninguna, se asume que se quiere ejecutar en modo Mono ciclo.  
 No es necesario una interfaz grafica (utilizando la consola seria mas que suficiente de momento).
 
 
